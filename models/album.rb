@@ -28,12 +28,12 @@ class Album
     db.close()
   end
 
-  def update()
+  def edit()
     sql = "UPDATE albums SET
-     (title, genre) = 
-     ('#{@title}', '#{@genre}')
-     WHERE id = #{@id}"
-     SqlRunner.run(sql)
+    (title, genre, artist_id) = 
+    ('#{@title}', '#{@genre}', #{@artist_id})
+    WHERE id = #{@id}"
+    SqlRunner.run(sql)
   end
 
   def delete()
@@ -48,9 +48,9 @@ class Album
 
   def self.all()
     sql = "SELECT * FROM albums"
-        result = SqlRunner.run(sql)
-        albums = result.map{|album| Album.new(album)}
-        return albums
+    result = SqlRunner.run(sql)
+    albums = result.map{|album| Album.new(album)}
+    return albums
   end
 
   def artist()
@@ -61,12 +61,11 @@ class Album
     return artist
   end
 
-  def self.find()
-
-  end
-
-  def edit()
-
+  def self.find(id)
+    sql = "SELECT * FROM albums WHERE id = #{id}"
+    result = SqlRunner.run(sql)
+    found_album = result.map{|album| Album.new(album)}
+    return found_album
   end
 
 

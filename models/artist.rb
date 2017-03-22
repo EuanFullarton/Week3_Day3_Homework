@@ -21,6 +21,19 @@ class Artist
       db.close()
   end
 
+  def edit()
+    sql = "UPDATE artists SET
+     (name) = 
+     ('#{@name}')
+     WHERE id = #{@id}"
+    SqlRunner.run(sql)
+  end
+
+  def delete()
+    sql = "DELETE FROM artists WHERE id = #{@id}"
+    SqlRunner.run(sql)
+  end
+
   def self.delete_all()
     sql = "DELETE FROM artists"
     SqlRunner.run(sql)
@@ -40,14 +53,12 @@ class Artist
     return albums
   end
 
-  def self.find()
-
+  def self.find(id)
+    sql = "SELECT * FROM artists WHERE id = #{id}"
+    result = SqlRunner.run(sql)
+    found_artist = result.first()
+    return found_artist
   end
-
-  def edit()
-
-  end
-
 
 
 end
