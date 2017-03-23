@@ -12,13 +12,11 @@ class Artist
   end
 
   def save()
-      db = PG.connect({dbname: 'music_collection', host: 'localhost'})
       sql =
       "INSERT INTO artists (name)
       VALUES ('#{@name}') RETURNING *"
-
-      @id = db.exec(sql).first()['id'].to_i
-      db.close()
+      artist = SqlRunner.run(sql).first()
+      @id = artist['id'].to_i
   end
 
   def edit()

@@ -15,17 +15,14 @@ class Album
   end
 
   def save()
-    db = PG.connect({dbname: 'music_collection', host: 'localhost'})
     sql = 
     "INSERT INTO albums 
     (title, genre, artist_id) 
     VALUES 
     ('#{@title}', '#{@genre}', #{@artist_id}) 
     RETURNING *"
-
-
-    @id = db.exec(sql).first()['id'].to_i
-    db.close()
+    album = SqlRunner.run(sql).first()
+    @id = album['id'].to_i
   end
 
   def edit()
